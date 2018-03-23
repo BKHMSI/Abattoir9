@@ -1,3 +1,5 @@
+#relation extraction test
+
 import textrazor
 
 textrazor.api_key = "91a94d86c43d68664ee98f06132eed6fa4da3e6d46a8988df4dd7d8e"
