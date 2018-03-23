@@ -3,7 +3,7 @@ import boto3
 
 class AWS:
     def __init__(self, client, bucket = ""):
-        self.client = boto3.client(client, 'us-east-2')
+        self.client = boto3.client(client)
         self.bucket = bucket
 
 class Comprehend(AWS):
@@ -33,18 +33,16 @@ class Rekognition(AWS):
         super(Rekognition, self).__init__('rekognition', bucket)
 
     def get_labels(self, image_path):
-        response = self.client.detect_labels(Image={'S3Object':{'Bucket': self.bucket,'Name':image_path}})
-        print('Detected labels for ' + image_path)    
-        for label in response['Labels']:
-            print (label['Name'] + ' : ' + str(label['Confidence']))
+        with open(image_path, "rb") as file:
+            blob = bytearray(file.read())
+        response = self.client.detect_text(Image = {'Bytes': blob})
+        print('Detected labels for ' + image_path)  
+        print(response["TextDetections"][0]["DetectedText"])  
         
-
-
 
 if __name__ == "__main__":
     rek = Rekognition('rekoginition-book-reader')
     rek.get_labels('the-magic-book/3.jpeg')
-
 
     # comprehend = Comprehend()
     # def get_entities(text):

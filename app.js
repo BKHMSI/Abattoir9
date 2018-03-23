@@ -46,4 +46,15 @@ app.controller('Controller', ['$scope', '$http', function($scope,$http) {
 
 }]);
 
+var page_len = 4
+$(document).ready(function(){  
+    for(var i = 0 ; i < page_len; i++) {
+      $('<div class="item" style="color=black"><img src="the-magic-book/'+i+'.jpeg"><div class="carousel-caption">Hello</div></div>').appendTo('.carousel-inner');
+      $('<li data-target="#carousel-example-generic" data-slide-to="'+i+'"></li>').appendTo('.carousel-indicators')
+    }
+    $('.item').first().addClass('active');
+    $('.carousel-indicators > li').first().addClass('active');
+    $('#carousel-example-generic').carousel();
+});
+
 
