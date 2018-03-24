@@ -30,29 +30,33 @@ class QnA():
 
 
 ########### INIT #########
-qna = QnA()
-rek = Rekognition('rekoginition-book-reader')
-tts = TTS()
-image_path = 'the-magic-book/18.jpeg'
+# qna = QnA()
+# rek = Rekognition('rekoginition-book-reader')
+# tts = TTS()
+# image_path = 'final-web/the-magic-book/18.jpeg'
 
-detected = rek.get_text(image_path)
-texts = []
-text_so_far = ""
-for text in detected:
-	if len(text.split(' ')) > 1:
-		text_so_far += " "+text
-		if text.find('.') != -1:
-			texts += [text_so_far]
-			text_so_far = ""
+# detected = rek.get_text(image_path)
+# detected = [det for det in detected if len(det.split(" ")) > 1]
+# texts = ' '.join(detected)
+# texts = texts.split('.')
 
+# text_so_far = ""
+# for text in detected:
+# 	if len(text.split(' ')) > 1:
+# 		text_so_far += " "+text
+# 		if text.find('.') != -1:
+# 			texts += [text_so_far]
+# 			text_so_far = ""
+
+texts = ["Great Answer!", "You're Close!", ""]
 print(texts)
 for i, text in enumerate(texts):
 	tts.synthSpeech(text)
-	tts.saveSound("{}_{}".format(image_path[:image_path.index('.')], i))
+	tts.saveSound("{}_{}".format("result", i))
 
-for text in texts:
-	if len(text.split(' ')) > 1:
-		qna.input(text)
-		qs, ans = qna.getComponents()
-		for i, q in enumerate(qs):
-			print("{} --> {}".format(q, ans[i]))
+# for text in texts:
+# 	if len(text.split(' ')) > 1:
+# 		qna.input(text)
+# 		qs, ans = qna.getComponents()
+# 		for i, q in enumerate(qs):
+# 			print("{} --> {}".format(q, ans[i]))

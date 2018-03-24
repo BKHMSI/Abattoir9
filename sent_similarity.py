@@ -58,7 +58,9 @@ def sentence_similarity(sentence1, sentence2):
             count += 1
  
     # Average the values
-    score /= count
+
+    if count > 0:
+        score /= count
     return score
  
 sentences = [

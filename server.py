@@ -1,14 +1,15 @@
 import os
+import json
 import time
 
 from http.server import SimpleHTTPRequestHandler, BaseHTTPRequestHandler, HTTPServer
 from urllib.parse import urlparse, parse_qs
 
-import comprehend
+import sent_similarity
 
 HOST_NAME = ""
 PORT_NUMBER = 8080
-web_dir = "web"
+web_dir = "final-web"
 
 # This class contains methods to handle our requests to different URIs in the app
 class MyHandler(SimpleHTTPRequestHandler):
@@ -25,19 +26,23 @@ class MyHandler(SimpleHTTPRequestHandler):
             parsed = urlparse(self.path)
             params = parse_qs(parsed.query)
             text   = params["text"][0]
-            print(text)
-            content  = comprehend.get_entities(text)
+            answer = params["ans"][0]
+            similarity  = sent_similarity.symmetric_sentence_similarity(text, answer)
+            content = json.dumps({"sim": similarity})
             self.respond(content) # we can retrieve response within this scope and then pass info to self.respond
         else:
 
             if self.path == "/":
-                self.path = "/index.html"
+                self.path = "/story.html"
             try:
                 sendReply = False
                 if self.path.endswith(".html"):
                     mimetype='text/html'
                     sendReply = True
                 if self.path.endswith(".jpg"):
+                    mimetype='image/jpg'
+                    sendReply = True
+                if self.path.endswith(".jpeg"):
                     mimetype='image/jpg'
                     sendReply = True
                 if self.path.endswith(".png"):
@@ -52,6 +57,9 @@ class MyHandler(SimpleHTTPRequestHandler):
                 if self.path.endswith(".css"):
                     mimetype='text/css'
                     sendReply = True
+                if self.path.endswith(".mp3"):
+                    mimetype = 'audio/mpeg'
+                    sendReply = True
 
                 if sendReply == True:
                     #Open the static file requested and send it
@@ -59,11 +67,20 @@ class MyHandler(SimpleHTTPRequestHandler):
                     self.send_response(200)
                     self.send_header('Content-type', mimetype)
                     self.end_headers()
-                    self.wfile.write(bytes(f.read(), "utf-8"))
+                    if self.path.endswith(".mp3"):
+                        self.wfile.write(self.load_binary(web_dir+self.path))
+                    elif self.path.endswith(".gif") or self.path.endswith(".png") or self.path.endswith(".jpeg"):
+                        self.wfile.write(self.load_binary(web_dir+self.path))
+                    else:
+                        self.wfile.write(bytes(f.read(), "utf-8"))
                     f.close()
 
             except IOError:
                 self.send_error(404,'File Not Found: %s' % self.path)
+
+    def load_binary(self, file_path):
+        with open(file_path, 'rb') as file:
+            return file.read()
  
     def handle_http(self, data):
         self.send_response(200)
