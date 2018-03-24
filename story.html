@@ -14,15 +14,19 @@
     <!-- Font Awesome -->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     <!-- Stylesheets -->
+    <link href="story.css" rel="stylesheet" type="text/css"/>
+    <link href="question.css" rel="stylesheet" type="text/css"/>
     <!-- Scripts -->
     <script type="text/javascript" charset="utf8" src="app.js"></script>
     <title>Abattoir</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Architects+Daughter" rel="stylesheet">
 </head>
 
 <body ng-controller="Controller">
-    <div class="container">
-        <h2>{{title}}</h2>
-        <div id="carousel-example-generic" class="carousel slide">
+    <h2 class="header">{{title}}</h2>
+    <div class="container"> 
+        <div id="carousel-example-generic" class="carousel slide" data-interval="false">
             <!-- Indicators -->
             <ol class="carousel-indicators"></ol>
             <!-- Wrapper for slides -->

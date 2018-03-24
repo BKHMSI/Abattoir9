@@ -1,0 +1,14 @@
+body {
+    background-color: #F2385A;
+    color: #E9F1DF;
+}
+
+h1 {
+    font-size: 3em;
+}
+
+.answer {
+    font-size: 2.5em;
+    height: 2.5em;
+    background-color: #E9F1DF;
+}

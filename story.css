@@ -1,0 +1,60 @@
+* {
+    font-family: 'Architects Daughter', cursive;
+    font-weight: 700;
+  }
+  
+  .carousel-control {
+    background-image: none !important;
+    width: 10%;
+  }
+
+  .carousel-inner {
+    width: 80%;
+    margin: 0 auto;
+    height: 600px;
+  }
+
+  .left.carousel-control span {
+    left: 0;
+    margin-left: 0;
+  }
+
+  .right.carousel-control span {
+    right: 0;
+    margin-right: 0;
+  }
+
+  .answer-submit {
+    background-color: #EDF25C;
+    color: black;
+    border: none;
+    font-size: 3em;
+    padding-left: 1em;
+    padding-right: 1em;
+    position: relative;
+    float: right;
+  }
+
+  .msg {
+    position: relative;
+    float: right;
+    clear: both;
+  }
+
+  .header {
+    margin: 0;
+    background-color: #BA2A20;
+    margin-bottom: 20px;
+    padding: 15px 0px 15px 20px;
+    color: #E9F1DF;
+    font-family: 'Architects Daughter', cursive;
+    font-size: 1.5em;
+  }
+
+  .score {
+    text-align: center;
+  }
+
+  .score img {
+    display: inline !important;
+  }
