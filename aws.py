@@ -6,6 +6,24 @@ class AWS:
         self.client = boto3.client(client)
         self.bucket = bucket
 
+class TTS(AWS):
+    def __init__(self):
+        super(TTS, self).__init__('polly')
+        self.response = ''
+
+    def synthSpeech(self, text):
+        self.response = self.client.synthesize_speech(OutputFormat='mp3',
+                                        Text=text,
+                                        VoiceId='Justin')
+    def _getSound(self):
+        self.sound = self.response['AudioStream'].read()
+
+    def saveSound(self, path):
+        self._getSound()
+        soundFile = open(path + '.mp3', 'wb')
+        soundFile.write(self.sound)
+        soundFile.close()
+
 class Comprehend(AWS):
 
     def __init__(self):
@@ -32,22 +50,10 @@ class Rekognition(AWS):
     def __init__(self, bucket):
         super(Rekognition, self).__init__('rekognition', bucket)
 
-    def get_labels(self, image_path):
+    def get_text(self, image_path):
         with open(image_path, "rb") as file:
             blob = bytearray(file.read())
         response = self.client.detect_text(Image = {'Bytes': blob})
         print('Detected labels for ' + image_path)  
-        print(response["TextDetections"][0]["DetectedText"])  
-        
-
-if __name__ == "__main__":
-    rek = Rekognition('rekoginition-book-reader')
-    rek.get_labels('the-magic-book/3.jpeg')
-
-    # comprehend = Comprehend()
-    # def get_entities(text):
-    #     entities = aws.get_entities(text)
-    #     return json.dumps(entities)
-
-
-
+        detected = [res["DetectedText"] for res in response["TextDetections"]]
+        return detected 

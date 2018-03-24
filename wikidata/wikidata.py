@@ -16,7 +16,7 @@ class Item(WikiData):
         else:
             item = pywikibot.ItemPage(self.repo, x)
         self.item = item.get()
-        print(self.item['labels']['en'])
+        print(self.item)
 
     def get_name(self):
         return self.item['labels']['en']
@@ -24,7 +24,7 @@ class Item(WikiData):
     def __str__(self):
         return "Description: {}".format(self.item["descriptions"]["en"])
 
-data = Item('P31')
+data = Item('')
 
-print(data.get_name())
+print(data)
 
